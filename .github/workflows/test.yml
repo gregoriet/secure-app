@@ -1,0 +1,17 @@
+# .github/workflows/test.yml
+ name: Tests de Seguretat Automatitzats
+
+ on: [push]
+
+ jobs:
+   test:
+     runs-on: ubuntu-latest
+
+     steps:
+       - uses: actions/checkout@v3
+       - name: Instal·lar dependències
+         run: npm install
+       - name: Executar tests
+         run: npm test
+       - name: Executar OWASP ZAP
+         run: docker run --network="host" -t iniweb/owasp-zap2docker-stable zap-baseline.py -t http://localhost:3000
